@@ -103,12 +103,15 @@ const ContactSection = () => {
     return () => ctx.revert();
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
-    // Simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const recipient = 'roghpeduca@gmail.com';
+    const subject = encodeURIComponent(`Portfolio Contact from ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    );
+    window.location.href = `mailto:${recipient}?subject=${subject}&body=${body}`;
 
     setIsSubmitting(false);
     setSubmitted(true);
@@ -138,9 +141,9 @@ const ContactSection = () => {
           </p>
 
           {/* LinkedIn CTA */}
-          <div ref={linkedinRef} className="p-6 rounded-2xl bg-gradient-to-br from-[#0a66c2]/20 to-[#0a66c2]/5 border border-[#0a66c2]/30">
+          <div ref={linkedinRef} className="p-6 rounded-2xl bg-gradient-to-br from-[#a855f7]/20 to-[#7e22ce]/5 border border-[#a855f7]/30">
             <div className="flex items-center gap-4">
-              <div className="p-3 rounded-xl bg-[#0a66c2]/20 text-[#0a66c2]">
+              <div className="p-3 rounded-xl bg-[#a855f7]/20 text-[#c084fc]">
                 <Linkedin size={24} />
               </div>
               <div className="flex-1">
@@ -152,7 +155,7 @@ const ContactSection = () => {
               href="https://www.linkedin.com/in/roghpeduca/"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-4 block w-full py-3 px-4 bg-[#0a66c2] hover:bg-[#0855a3] text-white text-center rounded-xl font-medium transition-colors"
+              className="mt-4 block w-full py-3 px-4 bg-[#a855f7] hover:bg-[#9333ea] text-white text-center rounded-xl font-medium transition-colors"
             >
               View LinkedIn Profile
             </a>
@@ -160,8 +163,8 @@ const ContactSection = () => {
         </div>
 
         {/* Right form */}
-        <div ref={formRef} className="lg:w-[40vw]">
-          <div className="p-7 rounded-2xl card-glass">
+        <div ref={formRef} className="w-full lg:w-[40vw]">
+          <div className="p-5 sm:p-7 rounded-2xl card-glass">
             {submitted ? (
               <div className="text-center py-8">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#a855f7]/10 flex items-center justify-center">
@@ -175,9 +178,9 @@ const ContactSection = () => {
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-5">
+              <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
                 <div>
-                  <label className="block font-mono text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70 mb-2">
+                  <label className="block font-mono text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70 mb-2">
                     Name
                   </label>
                   <Input
@@ -187,13 +190,13 @@ const ContactSection = () => {
                       setFormData({ ...formData, name: e.target.value })
                     }
                     required
-                    className="bg-purple-500/5 border-purple-500/20 text-[#f3e8ff] placeholder:text-[#a78bfa]/40 focus:border-[#a855f7]/50 focus:ring-[#a855f7]/20 rounded-xl"
+                    className="h-11 bg-purple-500/5 border-purple-500/20 text-base sm:text-sm text-[#f3e8ff] placeholder:text-[#a78bfa]/40 focus:border-[#a855f7]/50 focus:ring-[#a855f7]/20 rounded-xl"
                     placeholder="Your name"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-mono text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70 mb-2">
+                  <label className="block font-mono text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70 mb-2">
                     Email
                   </label>
                   <Input
@@ -203,13 +206,13 @@ const ContactSection = () => {
                       setFormData({ ...formData, email: e.target.value })
                     }
                     required
-                    className="bg-purple-500/5 border-purple-500/20 text-[#f3e8ff] placeholder:text-[#a78bfa]/40 focus:border-[#a855f7]/50 focus:ring-[#a855f7]/20 rounded-xl"
+                    className="h-11 bg-purple-500/5 border-purple-500/20 text-base sm:text-sm text-[#f3e8ff] placeholder:text-[#a78bfa]/40 focus:border-[#a855f7]/50 focus:ring-[#a855f7]/20 rounded-xl"
                     placeholder="your@email.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block font-mono text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70 mb-2">
+                  <label className="block font-mono text-[11px] sm:text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70 mb-2">
                     Message
                   </label>
                   <Textarea
@@ -219,7 +222,7 @@ const ContactSection = () => {
                     }
                     required
                     rows={4}
-                    className="bg-purple-500/5 border-purple-500/20 text-[#f3e8ff] placeholder:text-[#a78bfa]/40 focus:border-[#a855f7]/50 focus:ring-[#a855f7]/20 rounded-xl resize-none"
+                    className="min-h-28 bg-purple-500/5 border-purple-500/20 text-base sm:text-sm text-[#f3e8ff] placeholder:text-[#a78bfa]/40 focus:border-[#a855f7]/50 focus:ring-[#a855f7]/20 rounded-xl resize-none"
                     placeholder="How can I help you?"
                   />
                 </div>
@@ -253,7 +256,7 @@ const ContactSection = () => {
         <div className="hidden lg:block absolute right-24 top-2 w-24 h-24 rounded-[1.7rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-95" />
         <div className="hidden lg:block absolute right-24 top-32 w-24 h-24 rounded-[1.7rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-90" />
 
-        <div className="relative z-10 px-2 lg:px-24 py-2 -translate-y-2 lg:-translate-y-3">
+        <div className="relative z-10 px-2 lg:px-[13rem] py-2 -translate-y-2 lg:-translate-y-3">
           <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-12">
             <div className="lg:max-w-[56%]">
               <h3 className="text-[clamp(34px,3.6vw,52px)] font-bold text-gradient leading-[1.1]">

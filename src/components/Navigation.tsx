@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Sun, Moon } from 'lucide-react';
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -8,7 +8,8 @@ const Navigation = () => {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem('theme');
-    const light = savedTheme === 'light';
+    const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    const light = savedTheme ? savedTheme === 'light' : systemPrefersLight;
     setIsLightMode(light);
     document.documentElement.classList.toggle('light', light);
   }, []);
@@ -41,6 +42,7 @@ const Navigation = () => {
     setIsLightMode(next);
     document.documentElement.classList.toggle('light', next);
     localStorage.setItem('theme', next ? 'light' : 'dark');
+    window.dispatchEvent(new CustomEvent('portfolio-theme-change', { detail: { isLight: next } }));
   };
 
   const navItems = [
@@ -59,7 +61,7 @@ const Navigation = () => {
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled
             ? isLightMode
-              ? 'bg-white/90 backdrop-blur-xl border-b border-purple-500/15'
+              ? 'bg-[#ede8d0]/90 backdrop-blur-xl border-b border-purple-500/15'
               : 'bg-[#0a0a0f]/90 backdrop-blur-xl border-b border-purple-500/10'
             : 'bg-transparent'
         }`}
@@ -79,11 +81,12 @@ const Navigation = () => {
 
           {/* Desktop Nav */}
           <div className="hidden lg:flex items-center gap-6">
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="font-mono text-sm tracking-[0.14em] uppercase text-[#a78bfa]/70 hover:text-[#a855f7] transition-colors"
+                className="uiverse-nav-btn font-mono text-sm tracking-[0.14em] uppercase text-[#a78bfa]/70 hover:text-[#a855f7]"
+                style={{ ['--nav-i' as string]: index }}
               >
                 {item.label}
               </button>
@@ -93,11 +96,15 @@ const Navigation = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={toggleTheme}
-              className={`uiverse-theme-toggle ${isLightMode ? 'is-light' : ''}`}
-              aria-label="Toggle light mode"
-              title="Toggle light mode"
+              className={`theme-toggle-icons ${isLightMode ? 'is-light' : ''}`}
+              role="switch"
+              aria-checked={isLightMode}
+              aria-label={isLightMode ? 'Enable dark mode' : 'Enable light mode'}
+              title={isLightMode ? 'Enable dark mode' : 'Enable light mode'}
             >
-              <span className="uiverse-theme-toggle__thumb" />
+              <Sun size={15} className="theme-toggle-icons__icon theme-toggle-icons__sun" />
+              <Moon size={15} className="theme-toggle-icons__icon theme-toggle-icons__moon" />
+              <span className="theme-toggle-icons__thumb" />
             </button>
 
             {/* Mobile Menu Button */}
@@ -120,13 +127,14 @@ const Navigation = () => {
         }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8">
-          {navItems.map((item) => (
+          {navItems.map((item, index) => (
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`font-mono text-xl tracking-[0.14em] uppercase hover:text-[#a855f7] transition-colors ${
+              className={`uiverse-nav-btn uiverse-nav-btn--mobile font-mono text-xl tracking-[0.14em] uppercase hover:text-[#a855f7] ${
                 isLightMode ? 'text-slate-800' : 'text-[#f3e8ff]'
               }`}
+              style={{ ['--nav-i' as string]: index }}
             >
               {item.label}
             </button>

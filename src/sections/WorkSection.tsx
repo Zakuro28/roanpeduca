@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { ExternalLink, ArrowUpRight, FileText, Palette, GraduationCap } from 'lucide-react';
+import { ArrowUpRight, FileText, Palette, GraduationCap } from 'lucide-react';
 
 const portfolios = [
   {
@@ -65,47 +65,41 @@ const WorkSection = () => {
               href={portfolio.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="group relative w-full lg:w-[28vw] h-[300px] sm:h-[340px] lg:h-[42vh] rounded-2xl overflow-hidden shadow-2xl cursor-pointer preserve-3d transition-all duration-500 hover:-translate-y-3 hover:shadow-purple-500/20 card-glass"
+              className="group w-full lg:w-[28vw] rounded-2xl overflow-hidden shadow-2xl cursor-pointer transition-all duration-500 hover:-translate-y-2 hover:shadow-purple-500/20 card-glass border border-purple-500/20"
             >
-            {/* Background image */}
-            <img
-              src={portfolio.image}
-              alt={portfolio.title}
-              className="absolute inset-0 w-full h-full object-cover opacity-70 transition-all duration-500"
-            />
-
-            {/* Glow border on hover */}
-            <div className="absolute inset-0 rounded-2xl border border-purple-500/20 group-hover:border-purple-500/50 transition-colors duration-500" />
-
-            {/* Icon background */}
-            <div className="absolute top-6 left-6 p-4 rounded-2xl bg-purple-500/10 text-[#a855f7] group-hover:bg-[#a855f7] group-hover:text-[#0a0a0f] transition-colors duration-300">
-              <portfolio.icon size={32} />
-            </div>
-
-            {/* Content */}
-            <div className="absolute bottom-0 left-0 right-0 p-6">
-              <span className="portfolio-text-outline font-mono text-xs tracking-[0.14em] uppercase text-[#d8b4fe] mb-2 block">
-                {portfolio.category}
-              </span>
-              <h3 className="portfolio-text-outline text-[#c084fc] text-xl font-bold mb-2">
-                {portfolio.title}
-              </h3>
-              <p className="portfolio-text-outline text-[#e9d5ff] text-sm leading-relaxed mb-4 line-clamp-2">
-                {portfolio.description}
-              </p>
-              <div className="portfolio-text-outline flex items-center gap-2 text-[#d8b4fe] text-sm font-medium">
-                <span>View Portfolio</span>
-                <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              {/* Image on top */}
+              <div className="relative h-[220px] sm:h-[260px] lg:h-[230px] overflow-hidden">
+                <img
+                  src={portfolio.image}
+                  alt={portfolio.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f]/60 to-transparent" />
               </div>
-            </div>
 
-            {/* External link icon */}
-            <div className="absolute top-6 right-6 p-2 rounded-full bg-purple-500/10 text-[#a855f7] opacity-0 group-hover:opacity-100 transition-opacity">
-              <ExternalLink size={18} />
-            </div>
+              {/* Content below image */}
+              <div className="p-5">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-mono text-xs tracking-[0.14em] uppercase text-[#d8b4fe]">
+                    {portfolio.category}
+                  </span>
+                  <div className="p-2 rounded-full bg-purple-500/10 text-[#a855f7] group-hover:bg-[#a855f7] group-hover:text-[#0a0a0f] transition-colors duration-300">
+                    <portfolio.icon size={16} />
+                  </div>
+                </div>
 
-            {/* Decorative gradient */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/40 to-transparent opacity-80 transition-opacity duration-500" />
+                <h3 className="text-[#c084fc] text-xl font-bold mb-2">
+                  {portfolio.title}
+                </h3>
+                <p className="text-[#e9d5ff] text-sm leading-relaxed mb-4">
+                  {portfolio.description}
+                </p>
+
+                <div className="flex items-center gap-2 text-[#d8b4fe] text-sm font-medium">
+                  <span>View Portfolio</span>
+                  <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                </div>
+              </div>
             </a>
           ))}
         </div>
