@@ -83,7 +83,7 @@ const Navigation = () => {
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="font-mono text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70 hover:text-[#a855f7] transition-colors"
+                className="font-mono text-sm tracking-[0.14em] uppercase text-[#a78bfa]/70 hover:text-[#a855f7] transition-colors"
               >
                 {item.label}
               </button>
@@ -124,7 +124,7 @@ const Navigation = () => {
             <button
               key={item.id}
               onClick={() => scrollToSection(item.id)}
-              className={`font-mono text-lg tracking-[0.14em] uppercase hover:text-[#a855f7] transition-colors ${
+              className={`font-mono text-xl tracking-[0.14em] uppercase hover:text-[#a855f7] transition-colors ${
                 isLightMode ? 'text-slate-800' : 'text-[#f3e8ff]'
               }`}
             >

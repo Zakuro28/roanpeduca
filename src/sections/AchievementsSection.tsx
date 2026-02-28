@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   GraduationCap, Award, Trophy, Medal, 
-  Star, Crown, ChevronRight
+  Star, Crown
 } from 'lucide-react';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,7 +13,6 @@ const achievements = [
     icon: GraduationCap,
     title: 'University of the Philippines (UP) Diliman',
     subtitle: 'Graduate of BS Family Life and Child Development',
-    highlight: true,
   },
   {
     icon: Star,
@@ -139,33 +138,24 @@ const AchievementsSection = () => {
             <div
               key={achievement.title}
               ref={(el) => { itemsRef.current[index] = el; }}
-              className={`group p-5 rounded-2xl transition-all duration-300 ${
-                achievement.highlight
-                  ? 'bg-gradient-to-br from-purple-500/20 to-purple-900/20 border border-purple-500/30'
-                  : 'card-glass hover:bg-purple-500/10'
+              className={`group p-5 rounded-2xl transition-all duration-300 card-glass hover:bg-purple-500/10 ${
+                achievement.title === 'Outstanding Kapisanan ng mga Mag-aaral sa Filipino Officer'
+                  ? 'md:col-span-2 md:w-[calc(50%-0.5rem)] md:justify-self-center'
+                  : ''
               }`}
             >
               <div className="flex items-start gap-4">
-                <div className={`p-3 rounded-xl ${
-                  achievement.highlight
-                    ? 'bg-[#a855f7] text-[#0a0a0f]'
-                    : 'bg-purple-500/10 text-[#a855f7]'
-                }`}>
+                <div className="p-3 rounded-xl bg-purple-500/10 text-[#a855f7]">
                   <achievement.icon size={22} />
                 </div>
                 <div className="flex-1">
-                  <h3 className={`font-semibold mb-1 ${
-                    achievement.highlight ? 'text-gradient text-lg' : 'text-[#f3e8ff]'
-                  }`}>
+                  <h3 className="font-semibold mb-1 text-[#f3e8ff]">
                     {achievement.title}
                   </h3>
                   {achievement.subtitle && (
                     <p className="text-[#a78bfa]/70 text-sm">{achievement.subtitle}</p>
                   )}
                 </div>
-                {achievement.highlight && (
-                  <ChevronRight size={18} className="text-[#a855f7] opacity-50" />
-                )}
               </div>
             </div>
           ))}

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { 
   FileText, MessageSquare, Calendar, BarChart3, 
-  Code, Palette, Globe, Database, Users, Lightbulb, 
+  Palette, Globe, Users, Lightbulb, 
   Clock, Target
 } from 'lucide-react';
 
@@ -26,10 +26,8 @@ const hardSkills = [
   { icon: Calendar, name: 'Calendar Management', level: 92 },
   { icon: Globe, name: 'Travel Management', level: 88 },
   { icon: BarChart3, name: 'Data Management', level: 85 },
-  { icon: Code, name: 'Documentation Tools', level: 88 },
   { icon: Palette, name: 'Content Creation', level: 82 },
   { icon: Globe, name: 'Research & Analysis', level: 87 },
-  { icon: Database, name: 'Database Management', level: 80 },
 ];
 
 const SkillsSection = () => {
@@ -155,7 +153,11 @@ const SkillsSection = () => {
           {currentSkills.map((skill, index) => (
             <div
               key={skill.name}
-              className="group p-5 rounded-2xl card-glass hover:bg-purple-500/10 transition-all duration-300"
+              className={`group p-5 rounded-2xl card-glass hover:bg-purple-500/10 transition-all duration-300 ${
+                activeTab === 'hard' && skill.name === 'Research & Analysis'
+                  ? 'md:col-span-2 md:w-[calc(50%-0.5rem)] md:justify-self-center'
+                  : ''
+              }`}
               style={{
                 animationDelay: `${index * 50}ms`,
               }}

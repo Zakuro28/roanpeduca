@@ -232,7 +232,7 @@ const HeroSection = () => {
           ref={valuesRef}
           className="mt-12 lg:mt-16 flex flex-wrap justify-center gap-4 lg:gap-6"
         >
-          <span className="w-full text-center font-mono text-xs tracking-[0.14em] uppercase text-[#a78bfa]/70">
+          <span className="w-full text-center font-mono text-sm tracking-[0.18em] uppercase text-[#a855f7] font-semibold">
             Values
           </span>
           {values.map((value) => (
@@ -240,7 +240,7 @@ const HeroSection = () => {
               key={value}
               className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20"
             >
-              <span className="text-sm text-[#c4b5fd]">{value}</span>
+              <span className="text-sm text-[#a78bfa]/70">{value}</span>
             </div>
           ))}
         </div>

@@ -159,7 +159,9 @@ const ExtracurricularSection = () => {
           <div
             key={category.category}
             ref={(el) => { cardsRef.current[catIndex] = el; }}
-            className="group p-6 rounded-2xl card-glass hover:bg-purple-500/10 transition-all duration-300"
+            className={`group p-6 rounded-2xl card-glass hover:bg-purple-500/10 transition-all duration-300 ${
+              catIndex === activities.length - 1 ? 'lg:col-start-2' : ''
+            }`}
           >
             {/* Category Header */}
             <div className="flex items-center gap-3 mb-4 pb-4 border-b border-purple-500/20">

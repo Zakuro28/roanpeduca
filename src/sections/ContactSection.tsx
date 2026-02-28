@@ -1,7 +1,7 @@
-import { useRef, useLayoutEffect, useState } from 'react';
+﻿import { useRef, useLayoutEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Linkedin, Send, CheckCircle } from 'lucide-react';
+import { Linkedin, Send, CheckCircle, User, Mail, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -106,10 +106,10 @@ const ContactSection = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000));
-    
+
     setIsSubmitting(false);
     setSubmitted(true);
     setFormData({ name: '', email: '', message: '' });
@@ -227,7 +227,7 @@ const ContactSection = () => {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-[#a855f7] text-[#0a0a0f] hover:bg-[#c084fc] font-medium rounded-xl py-3 transition-colors disabled:opacity-50"
+                  className="no-text-outline w-full bg-[#a855f7] text-[#0a0a0f] hover:bg-[#c084fc] font-medium rounded-xl py-3 transition-colors disabled:opacity-50"
                 >
                   {isSubmitting ? 'Sending...' : 'Send Message'}
                   <Send size={16} className="ml-2" />
@@ -241,33 +241,58 @@ const ContactSection = () => {
       {/* Footer */}
       <div
         ref={footerRef}
-        className="mt-[8vh] pt-[8vh] border-t border-purple-500/10 flex flex-col md:flex-row items-center justify-between gap-4 max-w-6xl mx-auto"
+        className="relative mt-[8vh] pt-[8vh] border-t border-purple-500/10 w-full max-w-none mx-auto overflow-hidden"
       >
-        <div className="flex items-center gap-3">
-          <img 
-            src="/butterfly-logo.png" 
-            alt="Roan" 
-            className="w-6 h-6 butterfly-glow opacity-60"
-          />
-          <p className="font-mono text-xs text-[#a78bfa]/50">
-            © 2024 Roan. All rights reserved.
+        {/* Decorative blocks - left */}
+        <div className="hidden lg:block absolute left-0 top-8 w-32 h-32 rounded-[2rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-90" />
+        <div className="hidden lg:block absolute left-24 top-2 w-24 h-24 rounded-[1.7rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-95" />
+        <div className="hidden lg:block absolute left-24 top-32 w-24 h-24 rounded-[1.7rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-90" />
+
+        {/* Decorative blocks - right */}
+        <div className="hidden lg:block absolute right-0 top-8 w-32 h-32 rounded-[2rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-90" />
+        <div className="hidden lg:block absolute right-24 top-2 w-24 h-24 rounded-[1.7rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-95" />
+        <div className="hidden lg:block absolute right-24 top-32 w-24 h-24 rounded-[1.7rem] bg-gradient-to-b from-[#a855f7] to-transparent opacity-90" />
+
+        <div className="relative z-10 px-2 lg:px-24 py-2 -translate-y-2 lg:-translate-y-3">
+          <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-8 lg:gap-12">
+            <div className="lg:max-w-[56%]">
+              <h3 className="text-[clamp(34px,3.6vw,52px)] font-bold text-gradient leading-[1.1]">
+                Efficiency by design.
+                <br />
+                Clarity by craft.
+                <br />
+                Results by default.
+              </h3>
+            </div>
+
+            <div className="portfolio-text-outline space-y-3 text-[clamp(22px,1.6vw,34px)] text-[#a78bfa] lg:min-w-[34%] lg:pt-2">
+              <p className="flex items-center gap-4">
+                <User size={28} />
+                <span>Roan Peduca</span>
+              </p>
+              <p className="flex items-center gap-4">
+                <Mail size={28} />
+                <a href="mailto:roghpeduca@gmail.com" className="hover:text-[#c084fc] transition-colors">
+                  roghpeduca@gmail.com
+                </a>
+              </p>
+              <p className="flex items-center gap-4">
+                <Globe size={28} />
+                <a
+                  href="https://roanpeduca.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-[#c084fc] transition-colors"
+                >
+                  roanpeduca.vercel.app
+                </a>
+              </p>
+            </div>
+          </div>
+
+          <p className="font-mono text-xs text-[#a78bfa]/50 mt-4 text-center">
+            © 2026 Roan. All rights reserved.
           </p>
-        </div>
-        <div className="flex gap-6">
-          <a
-            href="https://www.linkedin.com/in/roghpeduca/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-mono text-xs text-[#a78bfa]/50 hover:text-[#a855f7] transition-colors"
-          >
-            LinkedIn
-          </a>
-          <a
-            href="mailto:roghpeduca@gmail.com"
-            className="font-mono text-xs text-[#a78bfa]/50 hover:text-[#a855f7] transition-colors"
-          >
-            Email
-          </a>
         </div>
       </div>
     </section>
@@ -275,3 +300,4 @@ const ContactSection = () => {
 };
 
 export default ContactSection;
+

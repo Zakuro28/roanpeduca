@@ -217,6 +217,15 @@
     transform: translateX(26px);
     background: radial-gradient(circle at 30% 30%, #fff 0%, #fde68a 45%, #f59e0b 100%);
   }
+
+  .portfolio-text-outline {
+    text-shadow:
+      -1px -1px 0 rgba(0, 0, 0, 0.95),
+      1px -1px 0 rgba(0, 0, 0, 0.95),
+      -1px 1px 0 rgba(0, 0, 0, 0.95),
+      1px 1px 0 rgba(0, 0, 0, 0.95),
+      0 2px 6px rgba(0, 0, 0, 0.55);
+  }
 }
 
 @layer utilities {
@@ -298,7 +307,7 @@
 
 /* Light mode */
 :root.light body {
-  background-color: #fdf8ee;
+  background-color: #f3eee2;
   color: #1f2937;
 }
 
@@ -309,7 +318,7 @@
 
 :root.light .bg-\[\#0a0a0f\],
 :root.light .bg-\[\#0d0d14\] {
-  background-color: #fdf8ee !important;
+  background-color: #f3eee2 !important;
 }
 
 :root.light .card-glass {
