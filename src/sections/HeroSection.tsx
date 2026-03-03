@@ -462,7 +462,7 @@ const HeroSection = () => {
         {/* Core Values */}
         <div
           ref={valuesRef}
-          className="hero-values mt-12 lg:mt-16 flex flex-wrap justify-center gap-4 lg:gap-6"
+          className="hero-values mt-12 lg:mt-16 flex flex-col items-center gap-3 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-4 lg:gap-6"
         >
           <span className="w-full text-center font-mono text-sm tracking-[0.18em] uppercase text-[#a855f7] font-semibold">
             Values
@@ -470,7 +470,7 @@ const HeroSection = () => {
           {values.map((value) => (
             <div
               key={value}
-              className="flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20"
+              className="w-full max-w-xs sm:w-auto flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20"
             >
               <span className="text-sm text-[#a78bfa]/70">{value}</span>
             </div>
@@ -479,9 +479,6 @@ const HeroSection = () => {
 
         {/* Scroll indicator */}
         <div className="hero-scroll-indicator absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="font-mono text-xs tracking-[0.14em] uppercase text-[#a78bfa]/50">
-            Scroll to explore
-          </span>
           <ChevronDown size={20} className="text-[#a855f7] animate-bounce" />
         </div>
       </div>
