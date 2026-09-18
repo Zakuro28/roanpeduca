@@ -48,6 +48,7 @@ const Navigation = () => {
   const navItems = [
     { label: 'Home', id: 'home' },
     { label: 'Work', id: 'work' },
+    { label: 'Case Study', id: 'case-studies' },
     { label: 'Expertise', id: 'skills' },
     { label: 'Involvement', id: 'activities' },
     { label: 'Recognition', id: 'achievements' },

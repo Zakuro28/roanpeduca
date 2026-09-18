@@ -140,7 +140,7 @@ const VolunteerSection = () => {
       <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
         {volunteerWork.map((work, index) => (
           <div
-            key={work.title}
+            key={`${work.title}-${work.subtitle ?? index}`}
             ref={(el) => { cardsRef.current[index] = el; }}
             className="group p-6 rounded-2xl card-glass hover:bg-purple-500/10 transition-all duration-300"
           >

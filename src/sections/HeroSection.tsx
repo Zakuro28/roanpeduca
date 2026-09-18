@@ -419,7 +419,7 @@ const HeroSection = () => {
 
             <a
               ref={introButtonRef}
-              href="https://www.loom.com/share/9e21b74ea41d4bf0ae65ba76083cdab1"
+              href="https://thesecretanna.notion.site/About-Roan-3db2edf218e88005835cec7d401547e5?source=copy_link"
               target="_blank"
               rel="noopener noreferrer"
               className="uiverse-fun-btn mb-6 inline-flex items-center gap-2"
