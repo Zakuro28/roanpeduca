@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useReducedMotion } from 'motion/react'
+import { motion, useInView, useReducedMotion } from 'motion/react'
 import { ArrowUpRight } from 'lucide-react'
 import { SAMPLES } from '../content'
 
 /**
- * The portfolios and case studies as a hand of cards. They're dealt onto the table when the page
- * loads, fan apart when you reach for them, and each opens the document.
+ * The portfolios and case studies as a hand of cards. They're dealt onto the table when they
+ * scroll into view, fan apart when you reach for them, and each opens the document.
  */
-export default function SampleDeck() {
+export default function SampleDeck({ active, onActive }: { active: number | null; onActive: (i: number | null) => void }) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const [unit, setUnit] = useState(1) // scales offsets with the deck's width
   const [open, setOpen] = useState(false) // pointer or focus is on the deck
-  const [active, setActive] = useState<number | null>(null)
   const reduce = useReducedMotion()
+  const dealt = useInView(wrapRef, { once: true, margin: '0px 0px -20% 0px' })
 
   useEffect(() => {
     const el = wrapRef.current
@@ -23,6 +23,8 @@ export default function SampleDeck() {
   }, [])
 
   const mid = (SAMPLES.length - 1) / 2
+  // Fan the hand out when the deck is hovered, or when a card is picked from the list beside it
+  const fanned = open || active !== null
 
   return (
     <div
@@ -31,31 +33,31 @@ export default function SampleDeck() {
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => {
         setOpen(false)
-        setActive(null)
+        onActive(null)
       }}
     >
       {/* The whole hand bobs gently while nobody is reaching for it */}
       <motion.ul
         className="absolute inset-0"
         aria-label="Portfolios and case studies"
-        animate={reduce || open ? { y: 0 } : { y: [0, -10, 0] }}
-        transition={open ? { duration: 0.4 } : { duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }}
+        animate={reduce || fanned ? { y: 0 } : { y: [0, -10, 0] }}
+        transition={fanned ? { duration: 0.4 } : { duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.6 }}
       >
         {SAMPLES.map((p, i) => {
           const d = i - mid
           const isActive = active === i
           // Resting hand, then a wider fan when the deck is reached for
-          const spread = open ? 1.9 : 1
+          const spread = fanned ? 1.6 : 1
           const x = d * 46 * spread * unit
-          const y = (Math.abs(d) * 14 * (open ? 1.5 : 1) + (isActive ? -34 : 0)) * unit
-          const rotate = isActive ? 0 : d * (open ? 9 : 6)
+          const y = (Math.abs(d) * 14 * (fanned ? 1.5 : 1) + (isActive ? -34 : 0)) * unit
+          const rotate = isActive ? 0 : d * (fanned ? 9 : 6)
           return (
             <motion.li
               key={p.name}
               className="absolute top-[14%] left-1/2 w-[62%] list-none"
               style={{ zIndex: isActive ? 20 : 10 - Math.abs(Math.round(d)) }}
               initial={reduce ? false : { x: '-50%', y: 520 * unit, rotate: d * 24 - 8, opacity: 0 }}
-              animate={{ x: `calc(-50% + ${x}px)`, y, rotate, scale: isActive ? 1.06 : 1, opacity: 1 }}
+              animate={dealt || reduce ? { x: `calc(-50% + ${x}px)`, y, rotate, scale: isActive ? 1.06 : 1, opacity: 1 } : undefined}
               transition={{
                 type: 'spring',
                 stiffness: 170,
@@ -68,14 +70,14 @@ export default function SampleDeck() {
                 href={p.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                onMouseEnter={() => setActive(i)}
+                onMouseEnter={() => onActive(i)}
                 onFocus={() => {
                   setOpen(true)
-                  setActive(i)
+                  onActive(i)
                 }}
                 onBlur={() => {
                   setOpen(false)
-                  setActive(null)
+                  onActive(null)
                 }}
                 aria-label={`${p.name}, ${p.kind.toLowerCase()}. Opens in a new tab`}
                 className="block overflow-hidden rounded-xl bg-paper shadow-[0_18px_40px_-18px_rgba(42,31,61,0.55),0_2px_6px_rgba(42,31,61,0.08)] ring-1 ring-ink/10 transition-shadow duration-300 hover:shadow-[0_30px_60px_-20px_rgba(42,31,61,0.6)]"

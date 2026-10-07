@@ -1,8 +1,9 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { motion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { ArrowUpRight, CircleAlert, Hammer, Sparkles } from 'lucide-react'
-import { DrawIcon, Magnetic, Tilt } from './fx'
+import { DrawIcon, Magnetic } from './fx'
 import Section from './Section'
+import SampleDeck from './SampleDeck'
 import { CASE_STUDIES, SAMPLES, type CaseStudy } from '../content'
 
 const EASE = [0.16, 1, 0.3, 1] as const
@@ -26,7 +27,7 @@ export default function Work() {
 const PARTS = [
   { key: 'problem', label: 'The problem', icon: CircleAlert, tint: 'bg-rose/20 text-[#a3375a]' },
   { key: 'built', label: 'What I built', icon: Hammer, tint: 'bg-violet/15 text-violet' },
-  { key: 'outcome', label: 'The outcome', icon: Sparkles, tint: 'bg-leaf/15 text-leaf' },
+  { key: 'outcome', label: 'The outcome', icon: Sparkles, tint: 'bg-leaf/15 text-leaf', panel: 'bg-leaf/[0.06]' },
 ] as const
 
 /** One case study, told as problem, build and outcome. On big screens the cards stick and pile up as you scroll. */
@@ -36,55 +37,52 @@ function CaseCard({ c, i, total, progress }: { c: CaseStudy; i: number; total: n
     <li className="[@media(min-width:1024px)_and_(min-height:760px)]:sticky" style={{ top: `calc(5.5rem + ${i * 14}px)` }}>
       <motion.article
         style={{ scale }}
-        className="relative grid origin-top gap-8 overflow-hidden rounded-[2rem] bg-paper p-6 shadow-[0_30px_60px_-40px_rgba(42,31,61,0.6)] ring-1 ring-line sm:p-9 lg:grid-cols-[1fr_1.45fr] lg:gap-12"
+        className="relative origin-top overflow-hidden rounded-[2rem] bg-paper shadow-[0_30px_60px_-40px_rgba(42,31,61,0.6)] ring-1 ring-line"
         initial={{ opacity: 0, y: 60 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '0px 0px -12% 0px' }}
         transition={{ duration: 0.9, ease: EASE }}
       >
-        <motion.span
-          aria-hidden
-          className="outline-num pointer-events-none absolute -bottom-6 -left-2 font-display text-[7rem] leading-none font-bold select-none sm:-bottom-10 sm:text-[10rem]"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, delay: 0.2, ease: EASE }}
-        >
-          {String(i + 1).padStart(2, '0')}
-        </motion.span>
-
-        <div className="relative flex flex-col">
-          <p className="text-[15px] font-medium text-violet">{c.area}</p>
-          <h3 className="mt-1 max-w-[16ch] font-display text-3xl leading-[1.1] font-semibold tracking-[-0.02em] sm:text-[2.1rem]">{c.title}</h3>
+        <header className="flex flex-col gap-6 p-6 sm:p-9 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+          <div>
+            <p className="flex items-center gap-3 text-[15px] font-medium text-violet">
+              <span className="font-display font-bold text-ink tabular-nums">
+                {String(i + 1).padStart(2, '0')}
+                <span className="text-muted"> / {String(total).padStart(2, '0')}</span>
+              </span>
+              <span className="h-px w-8 bg-line" aria-hidden />
+              {c.area}
+            </p>
+            <h3 className="mt-3 max-w-[24ch] font-display text-3xl leading-[1.08] font-semibold tracking-[-0.02em] text-balance sm:text-[2.4rem]">{c.title}</h3>
+          </div>
           {c.sample && (
-            <Magnetic strength={0.25} className="mt-7 inline-block w-fit lg:mt-auto">
+            <Magnetic strength={0.25} className="inline-block w-fit shrink-0">
               <a href={c.sample} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-semibold text-paper transition-colors hover:bg-plum">
                 Read the full write-up
                 <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
               </a>
             </Magnetic>
           )}
-        </div>
+        </header>
 
-        {/* Problem, build, outcome down a short rail */}
-        <ol className="relative space-y-6">
-          <span className="absolute top-5 bottom-5 left-5 w-px bg-line" aria-hidden />
+        {/* Problem, build, outcome side by side */}
+        <ol className="grid border-t border-line lg:grid-cols-3">
           {PARTS.map((p, k) => (
             <motion.li
               key={p.key}
-              className="relative grid grid-cols-[2.5rem_1fr] gap-4"
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              className={`border-line p-6 not-first:border-t sm:p-9 lg:not-first:border-t-0 lg:not-first:border-l ${'panel' in p ? p.panel : ''}`}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '0px 0px -10% 0px' }}
               transition={{ duration: 0.7, ease: EASE, delay: 0.15 + k * 0.12 }}
             >
-              <DrawIcon className={`relative grid size-10 place-items-center rounded-xl ring-4 ring-paper ${p.tint}`}>
-                <p.icon className="size-5" aria-hidden />
-              </DrawIcon>
-              <div>
-                <p className="text-sm font-semibold text-ink">{p.label}</p>
-                <p className="mt-1 max-w-[58ch] leading-relaxed text-ink-soft">{c[p.key]}</p>
+              <div className="flex items-center gap-3">
+                <DrawIcon className={`grid size-10 shrink-0 place-items-center rounded-xl ${p.tint}`}>
+                  <p.icon className="size-5" aria-hidden />
+                </DrawIcon>
+                <p className="font-semibold text-ink">{p.label}</p>
               </div>
+              <p className="mt-4 leading-relaxed text-ink-soft">{c[p.key]}</p>
             </motion.li>
           ))}
         </ol>
@@ -93,46 +91,49 @@ function CaseCard({ c, i, total, progress }: { c: CaseStudy; i: number; total: n
   )
 }
 
-/** Every portfolio and write-up, each opening the real document */
+/** Every portfolio and write-up: a list beside a hand of cards, both opening the real document */
 function Samples() {
+  const [active, setActive] = useState<number | null>(null)
   return (
-    <div className="mt-24 sm:mt-28">
-      <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">Portfolios and samples</h3>
-      <p className="mt-2 max-w-xl text-ink-soft">Writing, design and teaching work, plus the full case-study documents.</p>
-      <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {SAMPLES.map((s, i) => (
-          <motion.li
-            key={s.name}
-            initial={{ opacity: 0, y: 40, rotate: i % 2 ? 2 : -2 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-            viewport={{ once: true, margin: '0px 0px -10% 0px' }}
-            transition={{ type: 'spring', stiffness: 150, damping: 18, delay: (i % 3) * 0.08 }}
-          >
-            <Tilt className="h-full rounded-3xl" max={6}>
+    <div className="mt-24 grid items-center gap-12 sm:mt-28 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+      <div>
+        <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">Portfolios and samples</h3>
+        <p className="mt-2 max-w-md text-ink-soft">Writing, design and teaching work, plus the full case-study documents.</p>
+        <ul className="mt-8 border-t border-line" onMouseLeave={() => setActive(null)}>
+          {SAMPLES.map((s, i) => (
+            <motion.li
+              key={s.name}
+              className="border-b border-line"
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+              transition={{ duration: 0.6, ease: EASE, delay: i * 0.07 }}
+            >
               <a
                 href={s.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-cursor="Open ↗"
-                className="group flex h-full flex-col overflow-hidden rounded-3xl bg-paper ring-1 ring-line transition-shadow duration-500 hover:shadow-[0_30px_50px_-30px_rgba(42,31,61,0.6)]"
+                onMouseEnter={() => setActive(i)}
+                onFocus={() => setActive(i)}
+                onBlur={() => setActive(null)}
+                className="group flex items-center gap-4 py-4"
               >
-                <span className="block overflow-hidden">
-                  <img src={s.image} alt="" loading="lazy" className="aspect-[16/9] w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]" />
-                </span>
-                <span className="flex flex-1 flex-col p-5">
-                  <span className="text-sm font-medium text-violet">{s.kind}</span>
-                  <span className="mt-1 flex items-start justify-between gap-3">
-                    <span className="font-display text-xl leading-tight font-semibold">{s.name}</span>
-                    <ArrowUpRight className="mt-0.5 size-5 shrink-0 text-muted transition-[color,transform] duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-violet" aria-hidden />
+                <span className={`w-6 shrink-0 font-display text-sm font-bold tabular-nums transition-colors ${active === i ? 'text-violet' : 'text-muted'}`}>{String(i + 1).padStart(2, '0')}</span>
+                <span className="min-w-0 flex-1">
+                  <span className={`block font-display text-lg leading-tight font-semibold transition-transform duration-300 ${active === i ? 'translate-x-1' : ''}`}>{s.name}</span>
+                  <span className="mt-0.5 block text-sm text-muted">
+                    {s.kind} · {s.host}
                   </span>
-                  <span className="mt-2 text-[15px] leading-relaxed text-ink-soft">{s.description}</span>
-                  <span className="mt-auto pt-4 text-xs text-muted">Opens on {s.host}</span>
                 </span>
+                <ArrowUpRight className={`size-5 shrink-0 transition-[color,transform] duration-300 ${active === i ? 'translate-x-0.5 -translate-y-0.5 text-violet' : 'text-muted/60'}`} aria-hidden />
               </a>
-            </Tilt>
-          </motion.li>
-        ))}
-      </ul>
+            </motion.li>
+          ))}
+        </ul>
+      </div>
+      <div className="hidden sm:block">
+        <SampleDeck active={active} onActive={setActive} />
+      </div>
     </div>
   )
 }

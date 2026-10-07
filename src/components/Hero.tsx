@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { motion } from 'motion/react'
 import { ArrowDown, Play } from 'lucide-react'
-import SampleDeck from './SampleDeck'
+import Portrait from './Portrait'
 import { releaseButterflies } from './swarm'
 import { Magnetic, RotatingWord, SplitReveal } from './fx'
 import { EDUCATION, PERSON } from '../content'
@@ -74,10 +74,7 @@ export default function Hero() {
           </motion.div>
         </div>
 
-        <div>
-          <SampleDeck />
-          <p className="mt-2 text-center text-sm text-muted">Hover a card, then open the document.</p>
-        </div>
+        <Portrait className="mx-auto max-w-[19rem] sm:max-w-xs" />
       </div>
       <motion.a
         href="#work"
