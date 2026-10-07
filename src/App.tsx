@@ -1,42 +1,37 @@
-import { useRef } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Navigation from './components/Navigation';
-import HeroSection from './sections/HeroSection';
-import WorkSection from './sections/WorkSection';
-import CaseStudySection from './sections/CaseStudySection';
-import SkillsSection from './sections/SkillsSection';
-import ExtracurricularSection from './sections/ExtracurricularSection';
-import AchievementsSection from './sections/AchievementsSection';
-import VolunteerSection from './sections/VolunteerSection';
-import ContactSection from './sections/ContactSection';
+import { MotionConfig } from 'motion/react'
+import Nav from './components/Nav'
+import Hero from './components/Hero'
+import Stats from './components/Stats'
+import Work from './components/Work'
+import Process from './components/Process'
+import Skills from './components/Skills'
+import Experience from './components/Experience'
+import Volunteer from './components/Volunteer'
+import About from './components/About'
+import Contact from './components/Contact'
+import Butterflies from './components/Butterflies'
+import { Cursor } from './components/fx'
 
-gsap.registerPlugin(ScrollTrigger);
-
-function App() {
-  const mainRef = useRef<HTMLDivElement>(null);
-
+export default function App() {
   return (
-    <div ref={mainRef} className="relative bg-[#0a0a0f] min-h-screen">
-      {/* Grain overlay */}
-      <div className="grain-overlay" />
-      
-      {/* Navigation */}
-      <Navigation />
-      
-      {/* Sections */}
-      <main className="relative">
-        <HeroSection />
-        <WorkSection />
-        <CaseStudySection />
-        <SkillsSection />
-        <ExtracurricularSection />
-        <AchievementsSection />
-        <VolunteerSection />
-        <ContactSection />
+    <MotionConfig reducedMotion="user">
+      <a href="#work" className="sr-only z-[60] rounded-full bg-ink px-4 py-2 text-paper focus:not-sr-only focus:fixed focus:top-3 focus:left-3">
+        Skip to my work
+      </a>
+      <Cursor />
+      <Butterflies />
+      <Nav />
+      <main className="overflow-x-clip">
+        <Hero />
+        <Stats />
+        <Work />
+        <Process />
+        <Skills />
+        <Experience />
+        <Volunteer />
+        <About />
+        <Contact />
       </main>
-    </div>
-  );
+    </MotionConfig>
+  )
 }
-
-export default App;
