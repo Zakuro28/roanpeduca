@@ -11,7 +11,7 @@ export default function About() {
   return (
     <Section id="about" title="A bit about me">
       <div className="grid items-center gap-12 md:grid-cols-[minmax(0,21rem)_1fr] md:gap-16">
-        <Portrait caption={`${PERSON.name}, Philippines`} className="mx-auto md:mx-0" />
+        <Portrait caption={PERSON.name} className="mx-auto md:mx-0" />
 
         <div>
           {/* The one line that sums me up: each word lights up as it scrolls by */}

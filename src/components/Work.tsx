@@ -95,7 +95,7 @@ function CaseCard({ c, i, total, progress }: { c: CaseStudy; i: number; total: n
 function Samples() {
   const [active, setActive] = useState<number | null>(null)
   return (
-    <div className="mt-24 grid items-center gap-12 sm:mt-28 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
+    <div className="mt-20 grid items-center gap-12 sm:mt-24 lg:grid-cols-[1fr_1.2fr] lg:gap-16">
       <div>
         <h3 className="font-display text-2xl font-semibold tracking-[-0.02em] sm:text-3xl">Portfolios and samples</h3>
         <p className="mt-2 max-w-md text-ink-soft">Writing, design and teaching work, plus the full case-study documents.</p>

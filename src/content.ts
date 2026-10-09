@@ -6,7 +6,6 @@ export const PERSON = {
   email: 'roghpeduca@gmail.com',
   linkedin: 'https://www.linkedin.com/in/roghpeduca/',
   intro: 'https://thesecretanna.notion.site/About-Roan-3db2edf218e88005835cec7d401547e5?source=copy_link',
-  location: 'Philippines',
 }
 
 export type Sample = {
@@ -97,8 +96,8 @@ export const CASE_STUDIES: CaseStudy[] = [
   {
     area: 'Product design',
     title: 'Designing a CRM dashboard mockup',
-    problem: 'A colleague needed to see a sales pipeline the way a dedicated CRM (VinSolutions) would show it, without access to that tool.',
-    built: 'A dashboard mockup that recreated VinSolutions’ pipeline logic, with stages, lead status and flow, using tools the team already had.',
+    problem: 'A colleague needed to see a sales pipeline the way a dedicated CRM would show it, without access to that tool.',
+    built: 'A dashboard mockup that recreated a CRM’s pipeline logic, with stages, lead status and flow, using tools the team already had.',
     outcome: 'A non-technical stakeholder got a usable picture of their own pipeline right away, without waiting on procurement or a new tool rollout.',
   },
 ]
@@ -202,7 +201,6 @@ export const LEADERSHIP: Group[] = [
   },
 ]
 
-export const LEADERSHIP_COUNT = LEADERSHIP.reduce((n, g) => n + g.roles.length, 0)
 
 export const VOLUNTEER: { title: string; org: string; year?: string; text: string }[] = [
   { title: 'Build project', org: 'Gawad Kalinga UP Diliman', year: '2016', text: 'Helped build homes with and for underprivileged families.' },

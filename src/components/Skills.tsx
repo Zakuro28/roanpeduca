@@ -17,9 +17,9 @@ const AREAS: { color: string; tint: string; icon: LucideIcon }[] = [
 const ALL = SKILLS.flatMap((g, i) => g.items.map((item) => ({ item, area: g.area, color: AREAS[i % AREAS.length].color })))
 
 export default function Skills() {
-  const [area, setArea] = useState<string | null>(null)
-  const shown = area ? ALL.filter((s) => s.area === area) : ALL
-  const filters = [{ area: null, label: 'Everything', count: ALL.length, color: '#2a1f3d' }, ...SKILLS.map((g, i) => ({ area: g.area, label: g.area, count: g.items.length, color: AREAS[i % AREAS.length].color }))]
+  const [area, setArea] = useState(SKILLS[0].area)
+  const shown = ALL.filter((s) => s.area === area)
+  const filters = SKILLS.map((g, i) => ({ area: g.area, label: g.area, count: g.items.length, color: AREAS[i % AREAS.length].color }))
 
   return (
     <Section id="skills" title="What I’m good at" intro="The skills behind the case studies, grouped by the kind of work they support.">
@@ -47,7 +47,7 @@ export default function Skills() {
         })}
       </ul>
 
-      {/* Everything, sortable by area */}
+      {/* Every skill, one area at a time */}
       <motion.div
         className="mt-6 rounded-[2rem] bg-paper/70 p-5 ring-1 ring-line sm:p-8"
         initial={{ opacity: 0, y: 40 }}

@@ -5,7 +5,7 @@ import { SplitReveal } from './fx'
 /** A page section: its heading rises in word by word, then the intro fades up */
 export default function Section({ id, title, intro, children, className = '' }: { id: string; title: string; intro?: ReactNode; children: ReactNode; className?: string }) {
   return (
-    <section id={id} aria-labelledby={`${id}-title`} className={`py-20 sm:py-28 ${className}`}>
+    <section id={id} aria-labelledby={`${id}-title`} className={`py-14 sm:py-24 ${className}`}>
       <div className="mx-auto max-w-6xl px-5 sm:px-8">
         <SplitReveal id={`${id}-title`} text={title} className="font-display text-[clamp(1.9rem,3.6vw,2.8rem)] leading-[1.05] font-bold tracking-[-0.03em]" />
         {intro && (

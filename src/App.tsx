@@ -1,9 +1,7 @@
 import { MotionConfig } from 'motion/react'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
-import Stats from './components/Stats'
 import Work from './components/Work'
-import Process from './components/Process'
 import Skills from './components/Skills'
 import Experience from './components/Experience'
 import Volunteer from './components/Volunteer'
@@ -23,9 +21,7 @@ export default function App() {
       <Nav />
       <main className="overflow-x-clip">
         <Hero />
-        <Stats />
         <Work />
-        <Process />
         <Skills />
         <Experience />
         <Volunteer />

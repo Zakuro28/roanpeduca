@@ -7,7 +7,6 @@ import { PERSON } from '../content'
 
 const LINKS = [
   { id: 'work', label: 'Work' },
-  { id: 'process', label: 'How I work' },
   { id: 'skills', label: 'Skills' },
   { id: 'leadership', label: 'Leadership' },
   { id: 'about', label: 'About' },

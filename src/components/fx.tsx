@@ -1,7 +1,7 @@
 // Small motion building blocks, after reactbits.dev: split-text reveal, magnetic pull,
-// 3D tilt, count-up and a scroll-velocity marquee.
+// 3D tilt and a scroll-velocity marquee.
 import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { AnimatePresence, animate, motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from 'motion/react'
+import { AnimatePresence, motion, useInView, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from 'motion/react'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -88,26 +88,6 @@ export function Tilt({ children, className = '', max = 8 }: { children: ReactNod
   )
 }
 
-/** Counts up from zero when it scrolls into view */
-export function CountUp({ to, prefix = '', suffix = '', className = '' }: { to: number; prefix?: string; suffix?: string; className?: string }) {
-  const ref = useRef<HTMLSpanElement>(null)
-  const inView = useInView(ref, { once: true, margin: '0px 0px -10% 0px' })
-  const reduce = useReducedMotion()
-  const [n, setN] = useState(0)
-  useEffect(() => {
-    if (!inView || reduce) return
-    const c = animate(0, to, { duration: 1.6, ease: [0.16, 1, 0.3, 1], onUpdate: (v) => setN(Math.round(v)) })
-    return () => c.stop()
-  }, [inView, to, reduce])
-  return (
-    <span ref={ref} className={className}>
-      {prefix}
-      {(reduce ? to : n).toLocaleString('en-US')}
-      {suffix}
-    </span>
-  )
-}
-
 /** A strip that drifts on its own and speeds up (and flips direction) with scrolling */
 export function VelocityMarquee({ children, className = '' }: { children: ReactNode; className?: string }) {
   const track = useRef<HTMLDivElement>(null)
@@ -149,35 +129,6 @@ export function VelocityMarquee({ children, className = '' }: { children: ReactN
         </div>
       </div>
     </div>
-  )
-}
-
-/** Cycles through words in place: each one flips up out of a mask */
-export function RotatingWord({ words, className = '', every = 2200 }: { words: string[]; className?: string; every?: number }) {
-  const [i, setI] = useState(0)
-  const reduce = useReducedMotion()
-  useEffect(() => {
-    if (reduce) return
-    const t = setInterval(() => setI((n) => (n + 1) % words.length), every)
-    return () => clearInterval(t)
-  }, [reduce, every, words.length])
-  return (
-    <span className={`relative inline-grid overflow-hidden pb-[0.12em] align-bottom ${className}`} aria-hidden>
-      {/* The longest word reserves the width so the line never jumps */}
-      <span className="invisible col-start-1 row-start-1">{words.reduce((a, b) => (b.length > a.length ? b : a))}</span>
-      <AnimatePresence mode="popLayout" initial={false}>
-        <motion.span
-          key={words[i]}
-          className="col-start-1 row-start-1"
-          initial={{ y: '100%', rotateX: -70, opacity: 0 }}
-          animate={{ y: '0%', rotateX: 0, opacity: 1 }}
-          exit={{ y: '-100%', rotateX: 70, opacity: 0 }}
-          transition={{ duration: 0.6, ease }}
-        >
-          {words[i]}
-        </motion.span>
-      </AnimatePresence>
-    </span>
   )
 }
 
