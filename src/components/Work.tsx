@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { motion, useScroll, useTransform, type MotionValue } from 'motion/react'
 import { ArrowUpRight, CircleAlert, Hammer, Sparkles } from 'lucide-react'
-import { DrawIcon, Magnetic } from './fx'
+import { DrawIcon } from './fx'
 import Section from './Section'
 import SampleDeck from './SampleDeck'
 import { CASE_STUDIES, SAMPLES, type CaseStudy } from '../content'
@@ -55,14 +55,6 @@ function CaseCard({ c, i, total, progress }: { c: CaseStudy; i: number; total: n
             </p>
             <h3 className="mt-3 max-w-[24ch] font-display text-3xl leading-[1.08] font-semibold tracking-[-0.02em] text-balance sm:text-[2.4rem]">{c.title}</h3>
           </div>
-          {c.sample && (
-            <Magnetic strength={0.25} className="inline-block w-fit shrink-0">
-              <a href={c.sample} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-2 rounded-full bg-ink px-5 py-2.5 font-semibold text-paper transition-colors hover:bg-plum">
-                Read the full write-up
-                <ArrowUpRight className="size-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" aria-hidden />
-              </a>
-            </Magnetic>
-          )}
         </header>
 
         {/* Problem, build, outcome side by side */}

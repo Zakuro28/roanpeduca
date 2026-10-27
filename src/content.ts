@@ -67,7 +67,6 @@ export type CaseStudy = {
   problem: string
   built: string
   outcome: string
-  sample?: string
 }
 
 export const CASE_STUDIES: CaseStudy[] = [
@@ -80,7 +79,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       'A complete Notion operating system from the ground up: navigation, a “Start Here” onboarding page, documented SOPs across departments, and a recurring daily briefing template so leadership can track priorities at a glance.',
     outcome:
       'What used to live in scattered docs, chat threads and someone’s memory now lives in one system that is searchable, ready for onboarding, and built to outlast any one person’s knowledge.',
-    sample: SAMPLES[1].url,
   },
   {
     area: 'Program management',
@@ -91,7 +89,6 @@ export const CASE_STUDIES: CaseStudy[] = [
       'A mapping session covering six project areas and about 85 tasks, then a work plan that broke the top workstreams (a website audit and a demo-page integration) into scoped, estimated units: roughly 40–50 hours of work made visible and put in order.',
     outcome:
       'Leadership went from “we know this is complicated” to a shared, task-level roadmap with clear owners and a realistic timeline, and the hardest workstream was flagged early enough to protect the pilot date.',
-    sample: SAMPLES[0].url,
   },
   {
     area: 'Product design',
@@ -100,6 +97,16 @@ export const CASE_STUDIES: CaseStudy[] = [
     built: 'A dashboard mockup that recreated a CRM’s pipeline logic, with stages, lead status and flow, using tools the team already had.',
     outcome: 'A non-technical stakeholder got a usable picture of their own pipeline right away, without waiting on procurement or a new tool rollout.',
   },
+]
+
+// Quick facts for "A bit about me"
+export const ABOUT_FACTS: { label: string; text: string }[] = [
+  { label: 'Working style', text: 'The “planner” in the team. Organized and routine-driven, and an affiliative yet authoritative leader' },
+  { label: 'Communication', text: 'Honest, direct, and straight to the point. I value constructive feedback, consistency, and open-mindedness' },
+  { label: 'Deep work', text: 'Classical music in the background, a Discord channel open, and a good cup of coffee' },
+  { label: 'Hobbies', text: 'Ukulele, reading, K-pop and K-drama, singing and dancing, chess, Wordle, and Sudoku' },
+  { label: 'Adventures', text: 'Hiking mountains and exploring beaches across the Philippines' },
+  { label: 'Favorites', text: 'Lavender, curry, chocolate and ice cream, and The Alchemist' },
 ]
 
 export const VALUES = ['Family', 'Ethical behavior', 'Social responsibility', 'Management mindedness', 'Pursuit of excellence']

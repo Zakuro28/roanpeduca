@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react'
 import Section from './Section'
 import Portrait from './Portrait'
 import { ScrollWords } from './fx'
-import { PERSON, VALUES } from '../content'
+import { ABOUT_FACTS, PERSON, VALUES } from '../content'
 
 const ease = [0.16, 1, 0.3, 1] as const
 
@@ -16,7 +16,7 @@ export default function About() {
         <div>
           {/* The one line that sums me up: each word lights up as it scrolls by */}
           <ScrollWords
-            text="Good systems should outlast the person who built them. That’s the whole point."
+            text="Order is my love language. Lavender is my favorite color."
             className="font-display text-[clamp(1.7rem,3.3vw,2.7rem)] leading-[1.12] font-semibold tracking-[-0.025em]"
           />
           <motion.div
@@ -38,6 +38,23 @@ export default function About() {
           </motion.div>
         </div>
       </div>
+
+      {/* Quick facts: how I work and what I love */}
+      <ul className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {ABOUT_FACTS.map((f, i) => (
+          <motion.li
+            key={f.label}
+            className="rounded-2xl bg-paper p-6 ring-1 ring-line"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+            transition={{ duration: 0.7, ease, delay: (i % 3) * 0.1 }}
+          >
+            <p className="text-sm font-semibold text-violet">{f.label}</p>
+            <p className="mt-2 leading-relaxed text-ink-soft">{f.text}</p>
+          </motion.li>
+        ))}
+      </ul>
 
       {/* What I value */}
       <div className="mt-16">
